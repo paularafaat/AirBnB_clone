@@ -26,15 +26,17 @@ class FileStorage:
 
     def reload(self):
         """Serializes __objects to the JSON file (path: __file_path)."""
-        try:
+        if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as f:
-                serialized_objs = json.load(f)
-                for key, value in serialized_objs.items():
-                    class_name = key.split('.')[0]
-                    cls = globals()[class_name]
-                    self.__objects[key] = cls(**value)
-        except Exception:
-            pass
+                try:
+                    serialized_objs = json.load(f)  # Load the JSON data
+                    for key, value in serialized_objs.items():
+                        class_name = key.split('.')[0]
+                        if class_name in globals():
+                            cls = globals()[class_name]
+                            self.__objects[key] = cls(**value)
+                except Exception:
+                    pass
 
 
 
