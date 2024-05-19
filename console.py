@@ -5,7 +5,7 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     def do_quit(self, arg):
         """quiting the console"""
         return True
@@ -16,8 +16,12 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """Handle EOF to exit the program"""
-        print()
+        print("")
         return True
+
+    def emptyline(self):
+        """Do nothing upon receiving an empty line."""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
