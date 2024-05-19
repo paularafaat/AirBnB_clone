@@ -27,8 +27,7 @@ class BaseModel:
                 self.updated_at = self.created_at
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
+            self.created_at = self.updated_at = datetime.now()
 
     def save(self):
         """
@@ -59,4 +58,5 @@ class BaseModel:
         Returns a string representation of the instance.
         Format: [<class name>] (<self.id>) <self.__dict__>
         """
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        class_namae = self.__class__.__name__
+        return f"[{class_namae}] ({self.id}) {self.__dict__}"
