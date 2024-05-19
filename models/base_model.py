@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """base_modle module"""
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 class BaseModel:
@@ -22,12 +22,12 @@ class BaseModel:
             if 'id' not in kwargs:
                 self.id = str(uuid.uuid4())
             if 'created_at' not in kwargs:
-                self.created_at = datetime.now(timezone.utc)
+                self.created_at = datetime.now()
             if 'updated_at' not in kwargs:
                 self.updated_at = self.created_at
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now(timezone.utc)
+            self.created_at = self.updated_at = datetime.now()
 
     def save(self):
         """
@@ -36,7 +36,7 @@ class BaseModel:
         This method should be called every
         time an object is changed.
         """
-        self.updated_at = datetime.now(timezone.utc)
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
@@ -58,5 +58,4 @@ class BaseModel:
         Returns a string representation of the instance.
         Format: [<class name>] (<self.id>) <self.__dict__>
         """
-        class_name = self.__class__.__name__
-        return f"[{class_name}] ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
