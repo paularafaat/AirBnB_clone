@@ -4,6 +4,7 @@ from models.base_model import BaseModel
 import json
 import os
 
+
 class FileStorage:
     """FileStorage Class"""
     __file_path = "file.json"
@@ -12,15 +13,16 @@ class FileStorage:
     def all(self):
         """Returns the dictionary __objects."""
         return FileStorage.__objects
-    
+
     def new(self, obj):
-         """Sets in __objects the obj with key <obj class name>.id."""
-         key = f"{obj.__class__.__name__}.{obj.id}"
-         FileStorage.__objects[key] = obj
+        """Sets in __objects the obj with key <obj class name>.id."""
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)."""
-        dict_rep = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
+        dict_rep = {key: obj.to_dict() for key, obj in
+                    FileStorage.__objects.items()}
         with open(FileStorage.__file_path, 'w', encoding="utf-8") as file:
             json.dump(dict_rep, file)
 
@@ -38,6 +40,3 @@ class FileStorage:
                             FileStorage.__objects[key] = cls(**value)
                 except Exception:
                     pass
-
-
-
