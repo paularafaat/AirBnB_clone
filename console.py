@@ -93,6 +93,40 @@ class HBNBCommand(cmd.Cmd):
             print([str(value) for key, value in obj_dicts.items()
                    if key.split('.')[0] == args[0]])
 
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id"""
+        obj_dicts = storage.all()
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        class_name = args[0]
+        if class_name != "BaseModel":
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+        instance_key = f"{class_name}.{instance_id}"
+        if instance_key not in obj_dicts:
+            print("** no instance found **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        attribute_name = args[2]
+        if len(args) < 4:
+            print("** value missing **")
+            return
+        attribute_value = args[3]
+        instance = obj_dicts[instance_key]
+        if attribute_name in ["id", "created_at", "updated_at"]:
+            print("** cannot update read-only attribute **")
+            return
+        setattr(instance, attribute_name, type(getattr(instance, attribute_name))(attribute_value))
+        instance.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
