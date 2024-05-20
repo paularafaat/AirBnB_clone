@@ -11,12 +11,13 @@ class TestBasemodel(unittest.TestCase):
         self.assertIsNotNone(my_model.id)
         self.assertIsNotNone(my_model.created_at)
         self.assertIsNotNone(my_model.updated_at)
+
     def test_save(self):
         my_model = BaseModel()
         ini_upd = my_model.updated_at
         cur_upd = my_model.save()
         self.assertNotEqual(ini_upd, cur_upd)
-    
+
     def test_to_dict(self):
         my_model = BaseModel()
         my_model_dict = my_model.to_dict()
@@ -31,6 +32,7 @@ class TestBasemodel(unittest.TestCase):
         self.assertTrue(str(my_model).startswith('BaseModel'))
         self.assertIn(my_model.id, str(my_model))
         self.assertIn(str(my_model.__dict__), str(my_model))
+
 
 if __name__ == "__main__":
     unittest.main()
