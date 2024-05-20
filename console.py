@@ -66,8 +66,7 @@ class HBNBCommand(cmd.Cmd):
         if not args or len(args) < 1:
             print("** class name missing **")
             return
-        else:
-            class_name = args[0]
+        class_name = args[0]
         if class_name != "BaseModel":
             print("** class doesn't exist **")
         if len(args) < 2:
@@ -124,7 +123,8 @@ class HBNBCommand(cmd.Cmd):
         if attribute_name in ["id", "created_at", "updated_at"]:
             print("** cannot update read-only attribute **")
             return
-        setattr(instance, attribute_name, type(getattr(instance, attribute_name))(attribute_value))
+        setattr(instance, attribute_name,
+                type(getattr(instance, attribute_name))(attribute_value))
         instance.save()
 
 
